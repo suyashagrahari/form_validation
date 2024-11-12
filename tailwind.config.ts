@@ -8,6 +8,12 @@ export default {
   ],
   theme: {
     extend: {
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'twinkle': 'twinkle 4s ease-in-out infinite',
+        'pulse': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
