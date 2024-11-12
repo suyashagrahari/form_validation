@@ -6,15 +6,34 @@ import UserCard from "@/components/UserCard";
 
 interface User {
   personalInfo: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    occupation: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    occupation?: string;
+    companyDetails?: {
+      companyName?: string;
+      position?: string;
+    };
+    additionalEmails?: string[];
+  };
+  accountDetails: {
+    username?: string;
+    password?: string;
+    preferences?: {
+      notifications?: boolean;
+      twoFactorAuth?: boolean;
+    };
+    accountType?: string;
+    securityQuestions?: {
+      question: string;
+      answer: string;
+    }[];
   };
   preferences: {
-    theme: string;
-    notifications: boolean;
-    language: string;
+    theme?: string;
+    notifications?: boolean;
+    language?: string;
+    accessibility?: boolean;
   };
   _id: string;
 }
@@ -117,7 +136,7 @@ const UsersPage: React.FC = () => {
       </h1>
 
       <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 max-w-7xl">
-        {users.map((user: any) => (
+        {users.map((user: User) => (
           <UserCard key={user._id} user={user} />
         ))}
       </div>

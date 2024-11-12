@@ -3,15 +3,7 @@
 import { motion } from "framer-motion";
 import { useForm, Controller } from "react-hook-form";
 import { useState, useEffect } from "react";
-import {
-  CheckCircle,
-  AlertCircle,
-  Sun,
-  Moon,
-  Bell,
-  Globe,
-  Laptop,
-} from "lucide-react";
+import { CheckCircle, Sun, Bell, Globe, Laptop } from "lucide-react";
 
 type PreferencesProps = {
   data: {
@@ -25,8 +17,15 @@ type PreferencesProps = {
   onSubmit: () => void;
 };
 
+type FormValues = {
+  theme: string;
+  notifications: boolean;
+  language: string;
+  accessibility: boolean;
+};
+
 type FormField = {
-  id: string;
+  id: keyof FormValues;
   type: "select" | "checkbox";
   label: string;
   icon: JSX.Element;
@@ -49,7 +48,6 @@ export default function Preferences({
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showAccessibility, setShowAccessibility] = useState(false);
 
   const currentTheme = watch("theme");
   const notifications = watch("notifications");
@@ -96,13 +94,12 @@ export default function Preferences({
   useEffect(() => {
     const savedData = sessionStorage.getItem("preferencesDetails");
     if (savedData) {
-      const parsedData = JSON.parse(savedData);
-      Object.keys(parsedData).forEach((key: any) => {
+      const parsedData = JSON.parse(savedData) as FormValues;
+      (Object.keys(parsedData) as Array<keyof FormValues>).forEach((key) => {
         setValue(key, parsedData[key]);
       });
     }
   }, [setValue]);
-
   const onFormSubmit = (formData: PreferencesProps["data"]) => {
     setIsSubmitting(true);
 
@@ -133,7 +130,7 @@ export default function Preferences({
               {field.label}
             </label>
             <Controller
-              name={field.id as any}
+              name={field.id as keyof FormValues}
               control={control}
               render={({ field: { onChange, value } }) => (
                 <motion.div
@@ -142,7 +139,7 @@ export default function Preferences({
                   whileTap={{ scale: 0.98 }}>
                   <select
                     id={field.id}
-                    value={value}
+                    value={value as string}
                     onChange={onChange}
                     className="w-full px-4 py-3 rounded-lg bg-slate-800/50 backdrop-blur-sm border border-slate-600/50 text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition duration-200">
                     {field.options?.map((option) => (
@@ -160,7 +157,7 @@ export default function Preferences({
           </>
         ) : (
           <Controller
-            name={field.id as any}
+            name={field.id as keyof FormValues}
             control={control}
             render={({ field: { onChange, value } }) => (
               <motion.div
@@ -171,13 +168,13 @@ export default function Preferences({
                   <input
                     type="checkbox"
                     id={field.id}
-                    checked={value}
+                    checked={value as boolean}
                     onChange={onChange}
                     className="peer sr-only"
                   />
                   <div
                     onClick={() => {
-                      setValue(field.id as any, !value);
+                      setValue(field.id as keyof FormValues, !value);
                       updateData({
                         ...data,
                         [field.id]: !value,
