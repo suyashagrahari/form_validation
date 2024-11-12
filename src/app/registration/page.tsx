@@ -23,11 +23,10 @@ const Home = () => {
 
   return (
     <main className="min-h-screen flex items-center justify-center overflow-hidden relative bg-slate-900">
-      {/* Animated gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 opacity-50" />
-      {/* Animated mesh gradient overlay */}
+
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(76,29,149,0.1),rgba(15,23,42,0.1))] animate-pulse" />
-      {/* Interactive floating orbs */}
+
       <div className="absolute inset-0">
         {mounted && (
           <>
@@ -65,15 +64,13 @@ const Home = () => {
           </>
         )}
       </div>
-      {/* Animated grid pattern */}
+
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black_70%)]" />
-      {/* Glass effect container */}
+
       <div className="relative z-10 w-full max-w-4xl mx-4">
-        {/* <div className="backdrop-blur-lg bg-white/10 p-8 rounded-2xl shadow-2xl border border-white/20"> */}
         <ProgressiveForm />
-        {/* </div> */}
       </div>
-      {/* Subtle particle effect */}
+
       <div className="absolute inset-0 overflow-hidden">
         {mounted &&
           Array.from({ length: 20 }).map((_, i) => (
