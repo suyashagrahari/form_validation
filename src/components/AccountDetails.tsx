@@ -60,7 +60,6 @@ function AccountDetails({
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
   } = useForm({
     defaultValues: {
       ...data,
@@ -75,9 +74,9 @@ function AccountDetails({
   useEffect(() => {
     const savedData = sessionStorage.getItem("accountDetails");
     if (savedData) {
-      const parsedData = JSON.parse(savedData);
+      const parsedData = JSON.parse(savedData) as AccountDetailsProps["data"];
       Object.entries(parsedData).forEach(([key, value]) => {
-        setValue(key as any, value);
+        setValue(key as keyof AccountDetailsProps["data"], value);
       });
       setAccountType(parsedData.accountType || "personal");
       setSecurityQuestions(parsedData.securityQuestions || []);

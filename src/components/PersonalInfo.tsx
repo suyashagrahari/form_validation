@@ -21,6 +21,18 @@ type PersonalInfoProps = {
   onNext: () => void;
 };
 
+type PersonalInfoFormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  additionalEmails?: string[];
+  occupation?: string;
+  companyDetails?: {
+    companyName?: string;
+    position?: string;
+  };
+};
+
 export default function PersonalInfo({
   data,
   updateData,
@@ -42,18 +54,18 @@ export default function PersonalInfo({
 
   const occupation = watch("occupation");
 
-  // Update the useEffect for loading session data
   useEffect(() => {
     const savedData = sessionStorage.getItem("personalInfoData");
     if (savedData) {
-      const parsedData = JSON.parse(savedData);
+      const parsedData = JSON.parse(savedData) as PersonalInfoFormData;
       Object.entries(parsedData).forEach(([key, value]) => {
-        setValue(key as any, value);
+        setValue(key as keyof PersonalInfoFormData, value);
       });
+
       if (parsedData.occupation === "Employed") {
         setShowCompanyDetails(true);
       }
-      // Update this part to properly set additional emails
+
       if (
         parsedData.additionalEmails &&
         Array.isArray(parsedData.additionalEmails)
@@ -62,7 +74,6 @@ export default function PersonalInfo({
       }
     }
   }, [setValue]);
-
   // Watch for occupation changes to show/hide company details
   useEffect(() => {
     if (occupation === "Employed") {
@@ -438,39 +449,3 @@ export default function PersonalInfo({
     </motion.div>
   );
 }
-// API mock function (simulating backend integration)
-const mockApiCall = async (data: any) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (Math.random() > 0.1) {
-        // 90% success rate
-        resolve({ success: true, data });
-      } else {
-        reject(new Error("API call failed"));
-      }
-    }, 1000);
-  });
-};
-// Validation helper functions
-const validateEmail = (email: string) => {
-  const re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}$/i;
-  return re.test(email);
-};
-const validateRequired = (value: string) => {
-  return value.trim().length > 0;
-};
-// Custom hook for form field validation
-const useFieldValidation = (value: string, validations: any[]) => {
-  const [error, setError] = useState<string | null>(null);
-  useEffect(() => {
-    for (const validation of validations) {
-      const result = validation(value);
-      if (!result.valid) {
-        setError(result.message);
-        return;
-      }
-    }
-    setError(null);
-  }, [value, validations]);
-  return error;
-};

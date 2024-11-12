@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle, User, Key, Settings, X } from "lucide-react";
+import { CheckCircle, User, Key, Settings } from "lucide-react";
 import PersonalInfo from "./PersonalInfo";
 import AccountDetails from "./AccountDetails";
 import Preferences from "./Preferences";
