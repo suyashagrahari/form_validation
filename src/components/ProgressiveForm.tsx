@@ -112,7 +112,7 @@ export default function ProgressiveForm() {
   const handleSubmit = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3001/api/users/registration",
+        "https://form-validation-backend-5y8x.onrender.com/api/users/registration",
         {
           method: "POST",
           headers: {
