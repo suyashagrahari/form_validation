@@ -74,7 +74,9 @@ const UsersPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/users");
+        const response = await fetch(
+          "https://form-validation-backend-5y8x.onrender.com/api/users"
+        );
         const data = await response.json();
         setUsers(data);
       } catch (error) {
