@@ -105,6 +105,7 @@ export default function Preferences({
 
   const onFormSubmit = (formData: PreferencesProps["data"]) => {
     setIsSubmitting(true);
+
     setTimeout(() => {
       updateData(formData);
       sessionStorage.setItem("preferencesDetails", JSON.stringify(formData));

@@ -200,7 +200,7 @@ export default function PersonalInfo({
             <input
               type="text"
               id="lastName"
-              {...register("lastName", { required: "Last name is required" })}
+              //   {...register("lastName", { required: "Last name is required" })}
               className={`w-full px-4 py-3 rounded-lg bg-slate-800/50 backdrop-blur-sm border ${
                 errors.lastName ? "border-red-500/50" : "border-slate-600/50"
               } text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition duration-200`}

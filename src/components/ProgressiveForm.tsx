@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle, User, Key, Settings } from "lucide-react";
+import { CheckCircle, User, Key, Settings, X } from "lucide-react";
 import PersonalInfo from "./PersonalInfo";
 import AccountDetails from "./AccountDetails";
 import Preferences from "./Preferences";
-
+import { useRouter } from "next/navigation";
+import Toast from "./Toast";
 type FormData = {
   personalInfo: {
     firstName: string;
@@ -96,7 +97,10 @@ const stepVariants = {
 export default function ProgressiveForm() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>(initialFormData);
-
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState<"success" | "error">("success");
+  const router = useRouter();
   const handleNext = () => {
     setStep((prevStep) => prevStep + 1);
   };
@@ -105,16 +109,66 @@ export default function ProgressiveForm() {
     setStep((prevStep) => prevStep - 1);
   };
 
-  const handleSubmit = () => {
-    console.log("Form submitted:", formData);
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/users/registration",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to submit data");
+      }
+
+      // Remove specified items from sessionStorage
+      sessionStorage.removeItem("accountDetails");
+      sessionStorage.removeItem("personalInfoData");
+      sessionStorage.removeItem("preferencesDetails");
+
+      setToastMessage("Account Created Successfully! Welcome aboard!");
+      setToastType("success");
+      setShowToast(true);
+
+      setTimeout(() => {
+        router.push("/home");
+      }, 2000);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setToastMessage(
+        "There was a problem creating your account. Please try again."
+      );
+      setToastType("error");
+      setShowToast(true);
+    }
   };
 
   const updateFormData = (stepData: Partial<FormData>) => {
     setFormData((prevData) => ({ ...prevData, ...stepData }));
   };
 
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
   return (
     <div className="flex items-center justify-center md:p-6 sm:py-0 py-2">
+      <Toast
+        show={showToast}
+        message={toastMessage}
+        type={toastType}
+        onClose={() => setShowToast(false)}
+      />
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -237,6 +291,8 @@ export default function ProgressiveForm() {
           </AnimatePresence>
         </div>
       </motion.div>
+      {/* Custom Toast Notification */}
+      {/* Enhanced Toast Component */}
     </div>
   );
 }

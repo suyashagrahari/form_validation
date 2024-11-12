@@ -1,16 +1,47 @@
+// app/users/page.tsx
+
 "use client";
+import React, { useEffect, useState } from "react";
+import UserCard from "@/components/UserCard";
 
-import { useEffect, useState } from "react";
-import ProgressiveForm from "../../components/ProgressiveForm";
+interface User {
+  personalInfo: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    occupation: string;
+  };
+  preferences: {
+    theme: string;
+    notifications: boolean;
+    language: string;
+  };
+  _id: string;
+}
 
-const Home = () => {
-  const [mounted, setMounted] = useState(false);
+interface Particle {
+  left: string;
+  top: string;
+  animationDelay: string;
+}
+
+const UsersPage: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [particles, setParticles] = useState<Particle[]>([]);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    setParticles(
+      Array.from({ length: 20 }).map(() => ({
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 5}s`,
+      }))
+    );
 
-    const handleMouseMove = (e: any) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
         x: (e.clientX / window.innerWidth) * 2 - 1,
         y: (e.clientY / window.innerHeight) * 2 - 1,
@@ -21,13 +52,26 @@ const Home = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/users");
+        const data = await response.json();
+        setUsers(data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <main className="min-h-screen flex items-center justify-center overflow-hidden relative bg-slate-900">
-      {/* Animated gradient background */}
+    <main className="flex flex-col items-center justify-center min-h-screen bg-slate-900 overflow-hidden relative">
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 opacity-50" />
-      {/* Animated mesh gradient overlay */}
+
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(76,29,149,0.1),rgba(15,23,42,0.1))] animate-pulse" />
-      {/* Interactive floating orbs */}
+
       <div className="absolute inset-0">
         {mounted && (
           <>
@@ -65,25 +109,29 @@ const Home = () => {
           </>
         )}
       </div>
-      {/* Animated grid pattern */}
+
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black_70%)]" />
-      {/* Glass effect container */}
-      <div className="relative z-10 w-full max-w-4xl mx-4">
-        {/* <div className="backdrop-blur-lg bg-white/10 p-8 rounded-2xl shadow-2xl border border-white/20"> */}
-        <ProgressiveForm />
-        {/* </div> */}
+
+      <h1 className="text-4xl font-bold mt-10 mb-6 text-white z-10">
+        User Cards
+      </h1>
+
+      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 max-w-7xl">
+        {users.map((user: any) => (
+          <UserCard key={user._id} user={user} />
+        ))}
       </div>
-      {/* Subtle particle effect */}
+
       <div className="absolute inset-0 overflow-hidden">
         {mounted &&
-          Array.from({ length: 20 }).map((_, i) => (
+          particles.map((particle, i) => (
             <div
               key={i}
               className="absolute h-1 w-1 bg-white rounded-full opacity-20 animate-twinkle"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
+                left: particle.left,
+                top: particle.top,
+                animationDelay: particle.animationDelay,
               }}
             />
           ))}
@@ -92,4 +140,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default UsersPage;
