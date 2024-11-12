@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Assignment - Next.js App
 
-## Getting Started
+This is a Next.js application built using TypeScript (TSX), Tailwind CSS, and the App Router, designed to manage and store user data in the session. This app provides a smooth user experience by preserving form data even when the page is refreshed or when navigating between forms.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Session Storage**: User data is stored in the session, ensuring data persistence across page refreshes and between form navigation (previous/next).
+- **Tailwind CSS**: The app uses Tailwind CSS for responsive and flexible styling.
+- **Dynamic Form Elements**: The app supports dynamic field rendering, where form fields can be added or removed based on user interaction.
+- **Conditional Visibility**: Form elements can be conditionally displayed based on the user's inputs or selections.
+- **User Registration**: The app includes features for backend integration, such as user registration (currently set up for future API integration).
+- **Responsive Layout**: The app layout adjusts seamlessly for different screen sizes, ensuring accessibility across all devices.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js**: React-based framework for building the app, with routing and server-side rendering (SSR) support.
+- **React**: JavaScript library for building user interfaces, using components and hooks.
+- **TypeScript**: TypeScript for type safety and enhanced development experience.
+- **Tailwind CSS**: Utility-first CSS framework for styling and building custom, responsive designs.
+- **Framer Motion**: Animation library used to create smooth transitions and interactive animations in the UI.
+- **Lucide Icons**: Icon library for modern, customizable icons.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Installation
 
-## Learn More
+To get started with this project, follow these steps:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the Repository**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   git clone https://github.com/your-username/assignment.git
+   cd assignment
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Install the required dependencies using npm or yarn:**
+   npm install
+   or
+   yarn install
 
-## Deploy on Vercel
+3. **Once the dependencies are installed, you can start the development server with:**
+   npm run dev
+   or
+   yarn dev
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The app will be available at http://localhost:3000
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Usage**
+
+Session Storage: Form data is automatically saved in session storage after each form step. If you refresh the page or navigate between form steps, the data remains intact.
+
+Form Navigation: Use the "Next" and "Previous" buttons to navigate between the form steps. The data is preserved on each step.
+
+Form Validation: Form fields are validated using React Hook Form to ensure required fields are filled out correctly before submission.
+
+Backend Integration: When the form is completed, data is sent to the backend API using Axios for storage in the database.
