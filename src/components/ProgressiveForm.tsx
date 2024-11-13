@@ -6,21 +6,7 @@ import AccountDetails from "./AccountDetails";
 import Preferences from "./Preferences";
 import { useRouter } from "next/navigation";
 import Toast from "./Toast";
-type FormData = {
-  personalInfo: {
-    firstName: string;
-    lastName: string;
-    email: string;
-  };
-  accountDetails: {
-    username: string;
-    password: string;
-  };
-  preferences: {
-    theme: string;
-    notifications: boolean;
-  };
-};
+import { FormData } from "@/types/progessiveForm.types";
 
 const initialFormData: FormData = {
   personalInfo: { firstName: "", lastName: "", email: "" },

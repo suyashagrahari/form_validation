@@ -4,35 +4,10 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { CheckCircle, AlertCircle, Plus, Minus } from "lucide-react";
-
-type PersonalInfoProps = {
-  data: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    additionalEmails?: string[];
-    occupation?: string;
-    companyDetails?: {
-      companyName?: string;
-      position?: string;
-    };
-  };
-  updateData: (data: PersonalInfoProps["data"]) => void;
-  onNext: () => void;
-};
-
-type PersonalInfoFormData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  additionalEmails?: string[];
-  occupation?: string;
-  companyDetails?: {
-    companyName?: string;
-    position?: string;
-  };
-};
-
+import {
+  PersonalInfoProps,
+  PersonalInfoFormData,
+} from "@/types/personalInfo.types";
 export default function PersonalInfo({
   data,
   updateData,
@@ -116,6 +91,7 @@ export default function PersonalInfo({
       })
     );
   };
+
   const onSubmit = async (formData: PersonalInfoProps["data"]) => {
     setIsSubmitting(true);
     try {

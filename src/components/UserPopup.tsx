@@ -3,44 +3,8 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, User, Briefcase, Mail, Settings, Shield } from "lucide-react";
-
-interface UserPopupProps {
-  user: {
-    personalInfo: {
-      firstName?: string;
-      lastName?: string;
-      email?: string;
-      occupation?: string;
-      companyDetails?: {
-        companyName?: string;
-        position?: string;
-      };
-      additionalEmails?: string[];
-    };
-    accountDetails: {
-      username?: string;
-      password?: string;
-      preferences?: {
-        notifications?: boolean;
-        twoFactorAuth?: boolean;
-      };
-      accountType?: string;
-      securityQuestions?: {
-        question: string;
-        answer: string;
-      }[];
-    };
-    preferences: {
-      theme?: string;
-      notifications?: boolean;
-      language?: string;
-      accessibility?: boolean;
-    };
-    _id: string;
-  };
-  onClose: () => void;
-}
-
+import { UserPopupProps } from "@/types/userPopup.types";
+import InfoItem from "@/components/InfoItem";
 const UserPopup: React.FC<UserPopupProps> = ({ user, onClose }) => {
   const [activeTab, setActiveTab] = React.useState("personal");
 
@@ -205,25 +169,5 @@ const UserPopup: React.FC<UserPopupProps> = ({ user, onClose }) => {
     </motion.div>
   );
 };
-
-const InfoItem: React.FC<{
-  icon: React.ReactNode;
-  label: string;
-  value?: string;
-}> = ({ icon, label, value }) => (
-  <motion.div
-    className="flex items-center space-x-4 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg"
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3 }}>
-    <div className="text-blue-500 dark:text-blue-400">{icon}</div>
-    <div>
-      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-        {label}
-      </p>
-      <p className="text-lg font-semibold">{value || "N/A"}</p>
-    </div>
-  </motion.div>
-);
 
 export default UserPopup;
