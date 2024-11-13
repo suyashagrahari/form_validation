@@ -11,26 +11,7 @@ import {
   Plus,
   Minus,
 } from "lucide-react";
-
-type AccountDetailsProps = {
-  data: {
-    username: string;
-    password: string;
-    accountType?: string;
-    securityQuestions?: {
-      question: string;
-      answer: string;
-    }[];
-    preferences?: {
-      notifications: boolean;
-      twoFactorAuth: boolean;
-    };
-  };
-  updateData: (data: AccountDetailsProps["data"]) => void;
-  onNext: () => void;
-  onPrevious: () => void;
-};
-
+import { AccountDetailsProps } from "@/types/accountDetails.types";
 const securityQuestionOptions = [
   "What was your first pet's name?",
   "What city were you born in?",

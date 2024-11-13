@@ -3,13 +3,7 @@
 import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, AlertCircle, X } from "lucide-react";
-
-interface ToastProps {
-  show: boolean;
-  message: string;
-  type: "success" | "error";
-  onClose: () => void;
-}
+import { ToastProps } from "@/types/toastProps.types";
 
 export default function Toast({ show, message, type, onClose }: ToastProps) {
   useEffect(() => {

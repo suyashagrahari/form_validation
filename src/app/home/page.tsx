@@ -3,47 +3,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import UserCard from "@/components/UserCard";
-
-interface User {
-  personalInfo: {
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    occupation?: string;
-    companyDetails?: {
-      companyName?: string;
-      position?: string;
-    };
-    additionalEmails?: string[];
-  };
-  accountDetails: {
-    username?: string;
-    password?: string;
-    preferences?: {
-      notifications?: boolean;
-      twoFactorAuth?: boolean;
-    };
-    accountType?: string;
-    securityQuestions?: {
-      question: string;
-      answer: string;
-    }[];
-  };
-  preferences: {
-    theme?: string;
-    notifications?: boolean;
-    language?: string;
-    accessibility?: boolean;
-  };
-  _id: string;
-}
-
-interface Particle {
-  left: string;
-  top: string;
-  animationDelay: string;
-}
-
+import { User, Particle } from "@/types/home.types";
 const UsersPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });

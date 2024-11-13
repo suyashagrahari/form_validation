@@ -4,34 +4,11 @@ import { motion } from "framer-motion";
 import { useForm, Controller } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { CheckCircle, Sun, Bell, Globe, Laptop } from "lucide-react";
-
-type PreferencesProps = {
-  data: {
-    theme: string;
-    notifications: boolean;
-    language?: string;
-    accessibility?: boolean;
-  };
-  updateData: (data: PreferencesProps["data"]) => void;
-  onPrevious: () => void;
-  onSubmit: () => void;
-};
-
-type FormValues = {
-  theme: string;
-  notifications: boolean;
-  language: string;
-  accessibility: boolean;
-};
-
-type FormField = {
-  id: keyof FormValues;
-  type: "select" | "checkbox";
-  label: string;
-  icon: JSX.Element;
-  options?: { value: string; label: string }[];
-  visible?: boolean;
-};
+import {
+  PreferencesProps,
+  FormValues,
+  FormField,
+} from "@/types/preferences.types";
 
 export default function Preferences({
   data,
